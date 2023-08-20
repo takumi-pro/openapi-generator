@@ -1,0 +1,159 @@
+openapi: 3.1.0
+info:
+  title: todos
+  version: "1.0"
+servers:
+- url: http://localhost:3000
+paths:
+  /task:
+    get:
+      description: タスク一覧取得
+      operationId: get-task
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    tasks:
+                    - id: string
+                      title: string
+                      description: string
+              schema:
+                $ref: '#/components/schemas/get_task_200_response'
+          description: OK
+      summary: Fetch All Task
+      tags: []
+      x-stoplight:
+        id: zq70a6m7dk850
+    post:
+      description: タスク作成
+      operationId: post-task
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        "200":
+          description: OK
+      summary: Create New Task
+      x-stoplight:
+        id: g9h0jzc6gcmxk
+  /task/{taskId}:
+    get:
+      description: タスク取得
+      operationId: get-task-taskId
+      parameters:
+      - explode: false
+        in: path
+        name: taskId
+        required: true
+        schema: {}
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              examples:
+                Example 1:
+                  value:
+                    id: string
+                    title: string
+                    description: string
+              schema:
+                $ref: '#/components/schemas/Task'
+          description: OK
+      summary: Fetch Task
+      tags: []
+      x-stoplight:
+        id: 600kti7hfx872
+    parameters:
+    - explode: false
+      in: path
+      name: taskId
+      required: true
+      schema: {}
+      style: simple
+    put:
+      description: タスク更新
+      operationId: put-task-taskId
+      parameters:
+      - explode: false
+        in: path
+        name: taskId
+        required: true
+        schema: {}
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            examples:
+              Example 1:
+                value:
+                  id: string
+                  title: string
+                  description: string
+            schema:
+              $ref: '#/components/schemas/Task'
+      responses:
+        "200":
+          description: OK
+      summary: Update Task
+      x-stoplight:
+        id: 268b1ret5uusb
+components:
+  schemas:
+    User:
+      properties:
+        id:
+          description: Unique identifier for the given user.
+          x-stoplight:
+            id: 6qkta4axjac6b
+        email:
+          format: email
+          x-stoplight:
+            id: 7b095hv5x05d5
+        name:
+          x-stoplight:
+            id: ezdijgq3584f4
+      required:
+      - email
+      - id
+      - name
+      title: User
+      x-stoplight:
+        id: exci0m4mzce6b
+    Task:
+      example:
+        description: ""
+        id: ""
+        title: ""
+      properties:
+        id:
+          x-stoplight:
+            id: w295thi3nicge
+        title:
+          x-stoplight:
+            id: mjduxqzjdbjlx
+        description:
+          x-stoplight:
+            id: xrki3e6xxcqrb
+      required:
+      - id
+      - title
+      title: Task
+      x-stoplight:
+        id: h1uwcsftltrzt
+    get_task_200_response:
+      example:
+        tasks: ""
+      properties:
+        tasks:
+          items:
+            $ref: '#/components/schemas/Task'
+          x-stoplight:
+            id: 93owlufkbuh8l
+x-stoplight:
+  id: 3rwmphqudvaie

@@ -81,8 +81,6 @@ paths:
       x-stoplight:
         id: 600kti7hfx872
       description: タスク取得
-      requestBody:
-        content: {}
     put:
       summary: Update Task
       operationId: put-task-taskId
