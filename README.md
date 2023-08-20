@@ -65,6 +65,68 @@ Once image is built use
 docker run --rm -it openapi
 ```
 
+## GormでPostgreSQLに接続
+
+### PostgreSQL接続情報
+DockerでPostgreSQLを構築
+
+```toContext
+host: localhost
+user: takumi
+password: takumi
+dbname: todo
+port: 5434
+```
+
+### gormのインストール
+```bash
+go get -u gorm.io/gorm
+go get -u gorm.io/driver/postgres
+```
+
+### 接続処理
+`infrastructure/db.go`に以下を記述
+
+```Go
+package infrastructure
+
+import (
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
+)
+
+var err error
+var Db *gorm.DB
+
+// connect database
+func DbConnect() {
+	dsn := "host=localhost user=takumi password=takumi dbname=todo port=5434 sslmode=disable TimeZone=Asia/Tokyo"
+	Db, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	if err != nil {
+		panic("failed to connect database !")
+	}
+}
+```
+
+### タスク取得処理実装
+`go/api_default_service.go`の`GetTaskTaskId`関数を以下のように実装する
+```Go
+func (s *DefaultApiService) GetTaskTaskId(ctx context.Context, taskId interface{}) (ImplResponse, error) {
+	task := Task{}
+	result := infrastructure.Db.WithContext(ctx).First(&task)
+
+	if result.Error != nil {
+		return Response(500, nil), errors.New("test")
+	}
+
+	return Response(200, Task{
+		Id:          task.Id,
+		Title:       task.Title,
+		Description: task.Description,
+	}), nil
+}
+```
+
 
 ## エラー集
 
@@ -96,6 +158,15 @@ requestBody:
 
 #### 解決策
 該当のrequestBody項目を削除して解決した。
+
+###  failed to parse value &openapi.Task{Id:(*interface {})(nil), Title:(*interface {})(nil), Description:(*interface {})(nil)}, got error unsupported data type
+
+#### 原因
+gormがモデルの型に対応していない
+
+#### 解決策
+モデルの型を修正する。
+修正前は`*interface{}`型だったが、stringに変換し対応した
 
 
 ## 参考

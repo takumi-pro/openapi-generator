@@ -10,18 +10,17 @@
 package openapi
 
 type Task struct {
+	Id string `json:"id"`
 
-	Id *interface{} `json:"id"`
+	Title string `json:"title"`
 
-	Title *interface{} `json:"title"`
-
-	Description *interface{} `json:"description,omitempty"`
+	Description string `json:"description,omitempty"`
 }
 
 // AssertTaskRequired checks if the required fields are not zero-ed
 func AssertTaskRequired(obj Task) error {
 	elements := map[string]interface{}{
-		"id": obj.Id,
+		"id":    obj.Id,
 		"title": obj.Title,
 	}
 	for name, el := range elements {

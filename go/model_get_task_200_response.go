@@ -10,8 +10,7 @@
 package openapi
 
 type GetTask200Response struct {
-
-	Tasks *interface{} `json:"tasks,omitempty"`
+	Tasks []Task `json:"tasks,omitempty"`
 }
 
 // AssertGetTask200ResponseRequired checks if the required fields are not zero-ed

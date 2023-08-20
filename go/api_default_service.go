@@ -13,6 +13,8 @@ import (
 	"context"
 	"errors"
 	"net/http"
+
+	"github.com/GIT_USER_ID/GIT_REPO_ID/infrastructure"
 )
 
 // DefaultApiService is a service that implements the logic for the DefaultApiServicer
@@ -39,13 +41,18 @@ func (s *DefaultApiService) GetTask(ctx context.Context) (ImplResponse, error) {
 
 // GetTaskTaskId - Fetch Task
 func (s *DefaultApiService) GetTaskTaskId(ctx context.Context, taskId interface{}) (ImplResponse, error) {
-	// TODO - update GetTaskTaskId with the required logic for this service method.
-	// Add api_default_service.go to the .openapi-generator-ignore to avoid overwriting this service implementation when updating open api generation.
+	task := Task{}
+	result := infrastructure.Db.WithContext(ctx).First(&task)
 
-	//TODO: Uncomment the next line to return response Response(200, Task{}) or use other options such as http.Ok ...
-	//return Response(200, Task{}), nil
+	if result.Error != nil {
+		return Response(500, nil), errors.New("test")
+	}
 
-	return Response(http.StatusNotImplemented, nil), errors.New("GetTaskTaskId method not implemented")
+	return Response(200, Task{
+		Id:          task.Id,
+		Title:       task.Title,
+		Description: task.Description,
+	}), nil
 }
 
 // PostTask - Create New Task
