@@ -11,8 +11,8 @@ package openapi
 
 import (
 	"context"
-	"net/http"
 	"errors"
+	"net/http"
 )
 
 // DefaultApiService is a service that implements the logic for the DefaultApiServicer
@@ -34,7 +34,7 @@ func (s *DefaultApiService) GetTask(ctx context.Context) (ImplResponse, error) {
 	//TODO: Uncomment the next line to return response Response(200, GetTask200Response{}) or use other options such as http.Ok ...
 	//return Response(200, GetTask200Response{}), nil
 
-	return Response(http.StatusNotImplemented, nil), errors.New("GetTask method not implemented")
+	return Response(http.StatusNotImplemented, nil), errors.New("GetTask method not implemented. Let's implement GetTask !!")
 }
 
 // GetTaskTaskId - Fetch Task
