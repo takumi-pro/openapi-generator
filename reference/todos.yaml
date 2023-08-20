@@ -1,0 +1,160 @@
+openapi: 3.1.0
+x-stoplight:
+  id: 3rwmphqudvaie
+info:
+  title: todos
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /task:
+    get:
+      summary: Fetch All Task
+      tags: []
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tasks:
+                    type: array
+                    x-stoplight:
+                      id: 93owlufkbuh8l
+                    items:
+                      $ref: '#/components/schemas/Task'
+                      x-stoplight:
+                        id: k4j1ir3vx03sp
+              examples:
+                Example 1:
+                  value:
+                    tasks:
+                      - id: string
+                        title: string
+                        description: string
+      operationId: get-task
+      x-stoplight:
+        id: zq70a6m7dk850
+      description: タスク一覧取得
+    post:
+      summary: Create New Task
+      operationId: post-task
+      responses:
+        '200':
+          description: OK
+      x-stoplight:
+        id: g9h0jzc6gcmxk
+      description: タスク作成
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+  '/task/{taskId}':
+    parameters:
+      - schema:
+          type: string
+        name: taskId
+        in: path
+        required: true
+    get:
+      summary: Fetch Task
+      tags: []
+      responses:
+        '200':
+          description: OK
+          headers: {}
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+              examples:
+                Example 1:
+                  value:
+                    id: string
+                    title: string
+                    description: string
+      operationId: get-task-taskId
+      x-stoplight:
+        id: 600kti7hfx872
+      description: タスク取得
+      requestBody:
+        content: {}
+    put:
+      summary: Update Task
+      operationId: put-task-taskId
+      responses:
+        '200':
+          description: OK
+      x-stoplight:
+        id: 268b1ret5uusb
+      description: タスク更新
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+            examples:
+              Example 1:
+                value:
+                  id: string
+                  title: string
+                  description: string
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      examples:
+        - id: 142
+          firstName: Alice
+          lastName: Smith
+          email: alice.smith@gmail.com
+          dateOfBirth: '1997-10-31'
+          emailVerified: true
+          signUpDate: '2019-08-24'
+      x-stoplight:
+        id: exci0m4mzce6b
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the given user.
+          x-stoplight:
+            id: 6qkta4axjac6b
+        email:
+          type: string
+          format: email
+          x-stoplight:
+            id: 7b095hv5x05d5
+        name:
+          type: string
+          x-stoplight:
+            id: ezdijgq3584f4
+      required:
+        - id
+        - email
+        - name
+    Task:
+      title: Task
+      x-stoplight:
+        id: h1uwcsftltrzt
+      type: object
+      properties:
+        id:
+          type: string
+          x-stoplight:
+            id: w295thi3nicge
+        title:
+          type: string
+          x-stoplight:
+            id: mjduxqzjdbjlx
+        description:
+          type: string
+          x-stoplight:
+            id: xrki3e6xxcqrb
+      required:
+        - id
+        - title
